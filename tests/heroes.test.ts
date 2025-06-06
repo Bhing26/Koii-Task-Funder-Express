@@ -19,6 +19,10 @@ describe('Heroes Data Structure', () => {
 
     testCases.forEach(variant => {
       const hero = heroMap.get(variant);
+      
+      // Debug information
+      console.log(`Variant: ${variant}, Hero:`, hero);
+      
       expect(hero).toBeDefined();
       expect(hero?.name).toBe('Spider-Man');
       expect(hero?.alterEgo).toBe('Peter Parker');
@@ -35,6 +39,10 @@ describe('Heroes Data Structure', () => {
 
     testCases.forEach(name => {
       const hero = findHero(name);
+      
+      // Debug information
+      console.log(`Name: ${name}, Hero:`, hero);
+      
       expect(hero).toBeDefined();
       expect(hero?.name).toBe('Spider-Man');
     });
@@ -50,6 +58,10 @@ describe('Heroes Data Structure', () => {
 
     testCases.forEach(name => {
       const hero = findHero(name);
+      
+      // Debug information
+      console.log(`Name: ${name}, Hero:`, hero);
+      
       expect(hero).toBeDefined();
       expect(hero?.alterEgo).toBe('Peter Parker');
     });
