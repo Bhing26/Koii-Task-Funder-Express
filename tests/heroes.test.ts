@@ -10,10 +10,16 @@ describe('Heroes Data Structure', () => {
     const heroMap = createHeroNameMap();
     
     // Test various case variations
-    expect(heroMap.get('spider-man')).toBeDefined();
-    expect(heroMap.get('SPIDER-MAN')).toBeDefined();
-    expect(heroMap.get('peter parker')).toBeDefined();
-    expect(heroMap.get('PETER PARKER')).toBeDefined();
+    const variations = [
+      'spider-man', 'SPIDER-MAN', 'Spider-Man', 
+      'peter parker', 'PETER PARKER', 'Peter Parker'
+    ];
+
+    variations.forEach(variant => {
+      const hero = heroMap.get(variant);
+      expect(hero).toBeDefined();
+      expect(hero?.name).toBe('Spider-Man');
+    });
   });
 
   it('should find hero by name (case-insensitive)', () => {
