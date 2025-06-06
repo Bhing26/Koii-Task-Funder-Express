@@ -45,15 +45,17 @@ describe('CacheMonitor', () => {
     });
   });
 
-  it('should emit events for cache operations', (done) => {
-    const key = 'test-event-key';
-    
-    monitor.on('hit', (eventKey) => {
-      expect(eventKey).toBe(key);
-      done();
-    });
+  it('should emit events for cache operations', () => {
+    return new Promise<void>((resolve) => {
+      const key = 'test-event-key';
+      
+      monitor.on('hit', (eventKey) => {
+        expect(eventKey).toBe(key);
+        resolve();
+      });
 
-    monitor.recordHit(key);
+      monitor.recordHit(key);
+    });
   });
 
   // Singleton test
