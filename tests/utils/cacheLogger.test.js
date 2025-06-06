@@ -1,7 +1,7 @@
-const { describe, it, expect, beforeEach } = require('vitest');
-const NodeCache = require('node-cache');
-const { CacheMonitor, createCacheLogger } = require('../../src/utils/cacheLogger');
-const winston = require('winston');
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import NodeCache from 'node-cache';
+import { CacheMonitor, createCacheLogger } from '../../src/utils/cacheLogger.js';
+import winston from 'winston';
 
 describe('CacheMonitor', () => {
   let cache;
