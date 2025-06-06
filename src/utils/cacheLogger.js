@@ -1,10 +1,11 @@
-const winston = require('winston');
+import winston from 'winston';
+import NodeCache from 'node-cache';
 
 /**
  * Create a logger for cache events
  * @returns {winston.Logger} Configured cache logger
  */
-const createCacheLogger = () => {
+export const createCacheLogger = () => {
   return winston.createLogger({
     level: 'info',
     format: winston.format.combine(
@@ -28,7 +29,7 @@ const createCacheLogger = () => {
 /**
  * Cache monitoring class to track cache performance
  */
-class CacheMonitor {
+export class CacheMonitor {
   constructor(cache, logger) {
     this.cache = cache;
     this.logger = logger || createCacheLogger();
@@ -97,8 +98,3 @@ class CacheMonitor {
     this.logger.info('Cache statistics reset');
   }
 }
-
-module.exports = {
-  createCacheLogger,
-  CacheMonitor
-};
