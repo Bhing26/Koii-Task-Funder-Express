@@ -9,46 +9,58 @@ describe('Heroes Data Structure', () => {
   it('should create a case-insensitive hero map', () => {
     const heroMap = createHeroNameMap();
     
-    // Test various case variations
-    const variations = [
+    // Comprehensive test cases for Spider-Man
+    const spiderManVariations = [
       'spider-man', 'SPIDER-MAN', 'Spider-Man', 
-      'peter parker', 'PETER PARKER', 'Peter Parker'
+      'spiderman', 'SPIDERMAN',
+      'peter parker', 'PETER PARKER', 'Peter Parker',
+      'peterparker', 'PETERPARKER'
     ];
 
-    variations.forEach(variant => {
+    spiderManVariations.forEach(variant => {
       const hero = heroMap.get(variant);
+      expect(hero).toBeDefined();
+      expect(hero?.name).toBe('Spider-Man');
+      expect(hero?.alterEgo).toBe('Peter Parker');
+    });
+  });
+
+  it('should find hero by name (case-insensitive)', () => {
+    const testCases = [
+      'Spider-Man', 'spider-man', 'SPIDER-MAN', 'spiderman', 'SPIDERMAN'
+    ];
+
+    testCases.forEach(name => {
+      const hero = findHero(name);
       expect(hero).toBeDefined();
       expect(hero?.name).toBe('Spider-Man');
     });
   });
 
-  it('should find hero by name (case-insensitive)', () => {
-    // Test finding heroes with different casing
-    const spiderMan = findHero('Spider-Man');
-    const spiderManLower = findHero('spider-man');
-    const spiderManUpper = findHero('SPIDER-MAN');
-
-    expect(spiderMan).toBeDefined();
-    expect(spiderManLower).toBeDefined();
-    expect(spiderManUpper).toBeDefined();
-    expect(spiderMan).toEqual(spiderManLower);
-    expect(spiderMan).toEqual(spiderManUpper);
-  });
-
   it('should find hero by alter ego (case-insensitive)', () => {
-    const tonyStark = findHero('Tony Stark');
-    const tonyStarkLower = findHero('tony stark');
-    const tonyStarkUpper = findHero('TONY STARK');
+    const testCases = [
+      'Peter Parker', 'peter parker', 'PETER PARKER', 
+      'peterparker', 'PETERPARKER'
+    ];
 
-    expect(tonyStark).toBeDefined();
-    expect(tonyStarkLower).toBeDefined();
-    expect(tonyStarkUpper).toBeDefined();
-    expect(tonyStark).toEqual(tonyStarkLower);
-    expect(tonyStark).toEqual(tonyStarkUpper);
+    testCases.forEach(name => {
+      const hero = findHero(name);
+      expect(hero).toBeDefined();
+      expect(hero?.alterEgo).toBe('Peter Parker');
+    });
   });
 
   it('should return undefined for non-existent hero', () => {
-    const nonExistentHero = findHero('Non-Existent Hero');
-    expect(nonExistentHero).toBeUndefined();
+    const nonExistentHeroes = [
+      'Non-Existent Hero', 
+      'Random Name', 
+      '', 
+      '   '
+    ];
+
+    nonExistentHeroes.forEach(name => {
+      const hero = findHero(name);
+      expect(hero).toBeUndefined();
+    });
   });
 });
