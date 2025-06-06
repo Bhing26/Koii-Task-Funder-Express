@@ -60,7 +60,7 @@ function normalizeString(str: string): string {
 }
 
 /**
- * Generates all possible search keys for a given hero
+ * Generates comprehensive search keys for a given hero
  * @param hero - Hero object
  * @returns Array of search keys
  */
@@ -69,6 +69,8 @@ function generateHeroSearchKeys(hero: Hero): string[] {
   const baseKeys = [
     hero.name.toLowerCase(),
     hero.alterEgo.toLowerCase(),
+    hero.name.toUpperCase(),
+    hero.alterEgo.toUpperCase(),
     normalizeString(hero.name),
     normalizeString(hero.alterEgo)
   ];
@@ -78,9 +80,13 @@ function generateHeroSearchKeys(hero: Hero): string[] {
     return [
       ...baseKeys,
       'spiderman',
+      'SPIDERMAN',
       'spider-man',
+      'SPIDER-MAN',
       'peterparker',
-      'peter parker'
+      'PETERPARKER',
+      'peter parker',
+      'PETER PARKER'
     ];
   }
 
@@ -115,7 +121,10 @@ export function findHero(name: string): Hero | undefined {
   // Prepare multiple search strategies
   const searchVariants = [
     name.toLowerCase(),
-    normalizeString(name)
+    name.toUpperCase(),
+    normalizeString(name),
+    name.toLowerCase().replace(/\s/g, ''),
+    name.toUpperCase().replace(/\s/g, '')
   ];
 
   for (const variant of searchVariants) {
