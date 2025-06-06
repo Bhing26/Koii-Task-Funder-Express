@@ -7,10 +7,14 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": ["hero", "api", "typescript"],
+  "keywords": [
+    "hero",
+    "api",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vitest": "latest"
+    "vitest": "^3.2.2"
   }
 }

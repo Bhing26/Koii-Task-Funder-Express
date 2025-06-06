@@ -56,8 +56,18 @@ export function createHeroNameMap(): Map<string, Hero> {
   
   heroesData.forEach(hero => {
     // Add case-insensitive name mappings
-    heroMap.set(hero.name.toLowerCase(), hero);
-    heroMap.set(hero.alterEgo.toLowerCase(), hero);
+    const nameVariants = [
+      hero.name.toLowerCase(),
+      hero.name.replace('-', '').toLowerCase(),
+      hero.name.replace('-', ' ').toLowerCase(),
+      hero.alterEgo.toLowerCase(),
+      hero.name,
+      hero.alterEgo
+    ];
+
+    nameVariants.forEach(variant => {
+      heroMap.set(variant, hero);
+    });
   });
   
   return heroMap;
@@ -70,5 +80,19 @@ export function createHeroNameMap(): Map<string, Hero> {
  */
 export function findHero(name: string): Hero | undefined {
   const heroMap = createHeroNameMap();
-  return heroMap.get(name.toLowerCase());
+  
+  // Try multiple search strategies
+  const searchVariants = [
+    name.toLowerCase(),
+    name.replace('-', '').toLowerCase(),
+    name.replace('-', ' ').toLowerCase(),
+    name
+  ];
+
+  for (const variant of searchVariants) {
+    const hero = heroMap.get(variant);
+    if (hero) return hero;
+  }
+
+  return undefined;
 }
