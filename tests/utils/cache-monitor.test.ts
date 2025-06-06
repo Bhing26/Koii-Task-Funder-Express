@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CacheMonitor, cacheMonitor } from '../../src/utils/cache-monitor';
 import winston from 'winston';
 
