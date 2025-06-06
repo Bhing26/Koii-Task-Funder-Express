@@ -48,35 +48,43 @@ export const heroesData: Hero[] = [
 ];
 
 /**
- * Normalize a string for consistent comparison
- * @param str - Input string to normalize
- * @returns Normalized string
+ * Generate all possible name variations
+ * @param hero - Hero object
+ * @returns Array of name variations
  */
-function normalizeString(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^\w\s]/g, '')  // Remove special characters
-    .replace(/\s+/g, '')      // Remove all whitespace
-    .replace('-', '');        // Remove hyphens
+function generateNameVariations(hero: Hero): string[] {
+  return [
+    // Original variants
+    hero.name,
+    hero.alterEgo,
+    hero.name.toLowerCase(),
+    hero.alterEgo.toLowerCase(),
+    
+    // Normalized variants
+    hero.name.replace('-', '').toLowerCase(),
+    hero.name.replace('-', ' ').toLowerCase(),
+    hero.alterEgo.replace(/\s+/g, '').toLowerCase(),
+    
+    // No hyphen/space variants
+    hero.name.replace('-', ''),
+    hero.name.replace('-', ' '),
+    
+    // All lowercase, no special chars
+    hero.name.toLowerCase().replace(/[^\w]/g, ''),
+    hero.alterEgo.toLowerCase().replace(/[^\w]/g, '')
+  ];
 }
 
 /**
  * Creates a case-insensitive map of hero names to their full details
- * @returns Map of normalized hero names to hero objects
+ * @returns Map of hero name variations to hero objects
  */
 export function createHeroNameMap(): Map<string, Hero> {
   const heroMap = new Map<string, Hero>();
   
   heroesData.forEach(hero => {
-    // Add normalized name mappings
-    const nameVariants = [
-      normalizeString(hero.name),
-      normalizeString(hero.alterEgo),
-      hero.name.toLowerCase(),
-      hero.alterEgo.toLowerCase()
-    ];
-
-    nameVariants.forEach(variant => {
+    const variations = generateNameVariations(hero);
+    variations.forEach(variant => {
       heroMap.set(variant, hero);
     });
   });
@@ -92,10 +100,14 @@ export function createHeroNameMap(): Map<string, Hero> {
 export function findHero(name: string): Hero | undefined {
   const heroMap = createHeroNameMap();
   
-  // Try multiple search strategies
+  // Prepare search variations
   const searchVariants = [
-    normalizeString(name),
-    name.toLowerCase()
+    name,
+    name.toLowerCase(),
+    name.replace('-', '').toLowerCase(),
+    name.replace('-', ' ').toLowerCase(),
+    name.toLowerCase().replace(/[^\w]/g, ''),
+    name.replace(/\s+/g, '').toLowerCase()
   ];
 
   for (const variant of searchVariants) {
